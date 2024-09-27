@@ -1,0 +1,35 @@
+﻿@model Simple_Employee_Management_System.Models.Department
+
+@{
+    ViewData["Title"] = "Delete Department";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-warning">
+    <strong>Warning!</strong> Are you sure you want to delete this department?
+</div>
+
+<div class="form-group">
+    <label>Department ID:</label>
+    <p>@Model.DepartmentId</p>
+</div>
+
+<div class="form-group">
+    <label>Department Name:</label>
+    <p>@Model.DepartmentName</p>
+</div>
+
+<!-- Form for deleting the department -->
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="DepartmentId" />
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+}

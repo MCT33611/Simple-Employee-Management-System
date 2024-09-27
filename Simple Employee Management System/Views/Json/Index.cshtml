@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Upload Employee JSON";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Upload Employee JSON</h2>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="text-tab" data-bs-toggle="tab" data-bs-target="#text" type="button" role="tab" aria-controls="text" aria-selected="true">JSON Text</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="file-tab" data-bs-toggle="tab" data-bs-target="#file" type="button" role="tab" aria-controls="file" aria-selected="false">JSON File</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="jsonTextarea">Enter JSON Data:</label>
+                        <textarea id="jsonTextarea" class="form-control" rows="15">@ViewBag.SampleJson</textarea>
+                    </div>
+                    <button id="submitJson" class="btn btn-primary mt-3">Submit JSON</button>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="file" role="tabpanel" aria-labelledby="file-tab">
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="jsonFile">Upload JSON File:</label>
+                            <input type="file" class="form-control" id="jsonFile" name="file" accept=".json">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Upload File</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="result" class="mt-4"></div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#submitJson').click(function () {
+                var jsonData = $('#jsonTextarea').val();
+                $.ajax({
+                    url: '@Url.Action("ProcessJson", "Json")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(jsonData),
+                    success: function (response) {
+                        $('#result').html('<div class="alert alert-success">' + response + '</div>');
+                    },
+                    error: function (xhr, status, error) {
+                        $('#result').html('<div class="alert alert-danger">' + xhr.responseText + '</div>');
+                    }
+                });
+            });
+
+            $('#uploadForm').submit(function (e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '@Url.Action("UploadJsonFile", "Json")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $('#result').html('<div class="alert alert-success">' + response + '</div>');
+                    },
+                    error: function (xhr, status, error) {
+                        $('#result').html('<div class="alert alert-danger">' + xhr.responseText + '</div>');
+                    }
+                });
+            });
+        });
+    </script>
+}

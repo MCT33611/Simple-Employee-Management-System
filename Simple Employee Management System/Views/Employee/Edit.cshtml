@@ -1,0 +1,175 @@
+﻿@model Simple_Employee_Management_System.Models.Employee
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<h1>Edit Employee</h1>
+
+<form asp-action="Edit" method="post">
+    <input asp-for="EmployeeId" type="hidden" />
+
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DateOfJoining" class="control-label"></label>
+        <input asp-for="DateOfJoining" class="form-control" type="date" />
+        <span asp-validation-for="DateOfJoining" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DepartmentId" class="control-label"></label>
+        <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.Departments"></select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Salary" class="control-label"></label>
+        <input asp-for="Salary" class="form-control" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-5">Address</h4>
+    <input asp-for="Address.AddressId" type="hidden" />
+    <input asp-for="Address.EmployeeId" type="hidden" />
+
+    <div class="form-group">
+        <label asp-for="Address.Street" class="control-label"></label>
+        <input asp-for="Address.Street" class="form-control" />
+        <span asp-validation-for="Address.Street" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address.City" class="control-label"></label>
+        <input asp-for="Address.City" class="form-control" />
+        <span asp-validation-for="Address.City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address.State" class="control-label"></label>
+        <input asp-for="Address.State" class="form-control" />
+        <span asp-validation-for="Address.State" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address.PostalCode" class="control-label"></label>
+        <input asp-for="Address.PostalCode" class="form-control" />
+        <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-5">Projects</h4>
+    <div id="projects-container">
+        @for (int i = 0; i < Model.Projects.Count; i++)
+        {
+            <div class="form-group project-group m-3 p-3 bg-secondary rounded" id="project-@i">
+                <input type="hidden" name="Projects[@i].ProjectId" value="@Model.Projects.ElementAt(i).ProjectId" />
+                <input type="hidden" name="Projects[@i].EmployeeId" value="@Model.Projects.ElementAt(i).EmployeeId" />
+                <label for="Projects[@i].ProjectName">Project Name</label>
+                <input type="text" name="Projects[@i].ProjectName" class="form-control" value="@Model.Projects.ElementAt(i).ProjectName" />
+                <label for="Projects[@i].StartDate">Start Date</label>
+                <input type="date" name="Projects[@i].StartDate" class="form-control" value="@Model.Projects.ElementAt(i).StartDate.ToString("yyyy-MM-dd")" />
+                <label for="Projects[@i].EndDate">End Date</label>
+                <input type="date" name="Projects[@i].EndDate" class="form-control" value="@(Model.Projects.ElementAt(i).EndDate?.ToString("yyyy-MM-dd"))" />
+                <label for="Projects[@i].Role">Role</label>
+                <input type="text" name="Projects[@i].Role" class="form-control" value="@Model.Projects.ElementAt(i).Role" />
+                <button type="button" class="btn btn-danger mt-2" onclick="removeProject(@i)">Remove Project</button>
+            </div>
+        }
+    </div>
+    <button type="button" class="mt-2 btn btn-secondary" onclick="addProject()">Add Another Project</button>
+
+    <h4 class="mt-5">Dependents</h4>
+    <div id="dependents-container">
+        @for (int i = 0; i < Model.Dependents.Count; i++)
+        {
+            <div class="form-group dependent-group m-3 p-3 bg-secondary rounded" id="dependent-@i">
+                <input type="hidden" name="Dependents[@i].DependentId" value="@Model.Dependents.ElementAt(i).DependentId" />
+                <input type="hidden" name="Dependents[@i].EmployeeId" value="@Model.Dependents.ElementAt(i).EmployeeId" />
+                <label for="Dependents[@i].Name">Dependent Name</label>
+                <input type="text" name="Dependents[@i].Name" class="form-control" value="@Model.Dependents.ElementAt(i).Name" />
+                <label for="Dependents[@i].Relationship">Relationship</label>
+                <input type="text" name="Dependents[@i].Relationship" class="form-control" value="@Model.Dependents.ElementAt(i).Relationship" />
+                <label for="Dependents[@i].DateOfBirth">Date of Birth</label>
+                <input type="date" name="Dependents[@i].DateOfBirth" class="form-control" value="@Model.Dependents.ElementAt(i).DateOfBirth.ToString("yyyy-MM-dd")" />
+                <button type="button" class="btn btn-danger mt-2" onclick="removeDependent(@i)">Remove Dependent</button>
+            </div>
+        }
+    </div>
+    <button type="button" class="mt-2 btn btn-secondary" onclick="addDependent()">Add Another Dependent</button>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let projectIndex = @Model.Projects.Count;
+        let dependentIndex = @Model.Dependents.Count;
+
+        function addProject() {
+            const projectContainer = document.getElementById('projects-container');
+            const newProjectHtml = `
+                        <div class="form-group project-group m-3 p-3 bg-secondary rounded" id="project-${projectIndex}">
+                            <input type="hidden" name="Projects[${projectIndex}].ProjectId" value="0" />
+                            <input type="hidden" name="Projects[${projectIndex}].EmployeeId" value="@Model.EmployeeId" />
+                            <label for="Projects[${projectIndex}].ProjectName">Project Name</label>
+                            <input type="text" name="Projects[${projectIndex}].ProjectName" class="form-control" placeholder="Enter project name" />
+                            <label for="Projects[${projectIndex}].StartDate">Start Date</label>
+                            <input type="date" name="Projects[${projectIndex}].StartDate" class="form-control" />
+                            <label for="Projects[${projectIndex}].EndDate">End Date</label>
+                            <input type="date" name="Projects[${projectIndex}].EndDate" class="form-control" />
+                            <label for="Projects[${projectIndex}].Role">Role</label>
+                            <input type="text" name="Projects[${projectIndex}].Role" class="form-control" placeholder="Enter role" />
+                            <button type="button" class="btn btn-danger mt-2" onclick="removeProject(${projectIndex})">Remove Project</button>
+                        </div>`;
+            projectContainer.insertAdjacentHTML('beforeend', newProjectHtml);
+            projectIndex++;
+        }
+
+        function removeProject(index) {
+            const projectElement = document.getElementById(`project-${index}`);
+            projectElement.remove();
+        }
+
+        function addDependent() {
+            const dependentContainer = document.getElementById('dependents-container');
+            const newDependentHtml = `
+                        <div class="form-group dependent-group m-3 p-3 bg-secondary rounded" id="dependent-${dependentIndex}">
+                            <input type="hidden" name="Dependents[${dependentIndex}].DependentId" value="0" />
+                            <input type="hidden" name="Dependents[${dependentIndex}].EmployeeId" value="@Model.EmployeeId" />
+                            <label for="Dependents[${dependentIndex}].Name">Dependent Name</label>
+                            <input type="text" name="Dependents[${dependentIndex}].Name" class="form-control" placeholder="Enter dependent name" />
+                            <label for="Dependents[${dependentIndex}].Relationship">Relationship</label>
+                            <input type="text" name="Dependents[${dependentIndex}].Relationship" class="form-control" placeholder="Enter relationship" />
+                            <label for="Dependents[${dependentIndex}].DateOfBirth">Date of Birth</label>
+                            <input type="date" name="Dependents[${dependentIndex}].DateOfBirth" class="form-control" />
+                            <button type="button" class="btn btn-danger mt-2" onclick="removeDependent(${dependentIndex})">Remove Dependent</button>
+                        </div>`;
+            dependentContainer.insertAdjacentHTML('beforeend', newDependentHtml);
+            dependentIndex++;
+        }
+
+        function removeDependent(index) {
+            const dependentElement = document.getElementById(`dependent-${index}`);
+            dependentElement.remove();
+        }
+    </script>
+}

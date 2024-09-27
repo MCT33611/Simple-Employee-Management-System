@@ -1,0 +1,142 @@
+﻿@model Simple_Employee_Management_System.Models.Employee
+
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<h1>Create Employee</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DateOfJoining" class="control-label"></label>
+        <input asp-for="DateOfJoining" class="form-control" type="date" />
+        <span asp-validation-for="DateOfJoining" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DepartmentId" class="control-label"></label>
+        <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.Departments"></select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Salary" class="control-label"></label>
+        <input asp-for="Salary" class="form-control" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-5">Address</h4>
+    <div class="form-group">
+        <label asp-for="Address.Street" class="control-label"></label>
+        <input asp-for="Address.Street" class="form-control" />
+        <span asp-validation-for="Address.Street" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address.City" class="control-label"></label>
+        <input asp-for="Address.City" class="form-control" />
+        <span asp-validation-for="Address.City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address.State" class="control-label"></label>
+        <input asp-for="Address.State" class="form-control" />
+        <span asp-validation-for="Address.State" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address.PostalCode" class="control-label"></label>
+        <input asp-for="Address.PostalCode" class="form-control" />
+        <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-5">Projects</h4>
+    <div id="projects-container">
+        <div class="form-group project-group m-3 p-3 bg-secondary rounded">
+            <label for="ProjectName">Project Name</label>
+            <input type="text" name="Projects[0].ProjectName" class="form-control" placeholder="Enter project name" />
+            <label for="StartDate">Start Date</label>
+            <input type="date" name="Projects[0].StartDate" class="form-control" />
+            <label for="EndDate">End Date</label>
+            <input type="date" name="Projects[0].EndDate" class="form-control" />
+            <label for="Role">Role</label>
+            <input type="text" name="Projects[0].Role" class="form-control" placeholder="Enter role" />
+        </div>
+    </div>
+    <button type="button" class="mt-2 btn btn-secondary" onclick="addProject()">Add Another Project</button>
+
+    <h4 class="mt-5">Dependents</h4>
+    <div id="dependents-container">
+        <div class="form-group dependent-group m-3 p-3 bg-secondary rounded">
+            <label for="DependentName">Dependent Name</label>
+            <input type="text" name="Dependents[0].Name" class="form-control" placeholder="Enter dependent name" />
+            <label for="Relationship">Relationship</label>
+            <input type="text" name="Dependents[0].Relationship" class="form-control" placeholder="Enter relationship" />
+            <label for="DateOfBirth">Date of Birth</label>
+            <input type="date" name="Dependents[0].DateOfBirth" class="form-control" />
+        </div>
+    </div>
+    <button type="button" class="mt-2 btn btn-secondary" onclick="addDependent()">Add Another Dependent</button>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let projectIndex = 1;
+        let dependentIndex = 1;
+
+        function addProject() {
+            const projectContainer = document.getElementById('projects-container');
+            const newProjectHtml = `
+                        <div class="form-group project-group m-3 p-3 bg-secondary rounded">
+                            <label for="ProjectName">Project Name</label>
+                            <input type="text" name="Projects[${projectIndex}].ProjectName" class="form-control" placeholder="Enter project name" />
+                            <label for="StartDate">Start Date</label>
+                            <input type="date" name="Projects[${projectIndex}].StartDate" class="form-control" />
+                            <label for="EndDate">End Date</label>
+                            <input type="date" name="Projects[${projectIndex}].EndDate" class="form-control" />
+                            <label for="Role">Role</label>
+                            <input type="text" name="Projects[${projectIndex}].Role" class="form-control" placeholder="Enter role" />
+                        </div>`;
+            projectContainer.insertAdjacentHTML('beforeend', newProjectHtml);
+            projectIndex++;
+        }
+
+        function addDependent() {
+            const dependentContainer = document.getElementById('dependents-container');
+            const newDependentHtml = `
+                                <div class="form-group dependent-group m-3 p-3 bg-secondary rounded">
+                            <label for="DependentName">Dependent Name</label>
+                            <input type="text" name="Dependents[${dependentIndex}].Name" class="form-control" placeholder="Enter dependent name" />
+                            <label for="Relationship">Relationship</label>
+                            <input type="text" name="Dependents[${dependentIndex}].Relationship" class="form-control" placeholder="Enter relationship" />
+                            <label for="DateOfBirth">Date of Birth</label>
+                            <input type="date" name="Dependents[${dependentIndex}].DateOfBirth" class="form-control" />
+                        </div>`;
+            dependentContainer.insertAdjacentHTML('beforeend', newDependentHtml);
+            dependentIndex++;
+        }
+    </script>
+}

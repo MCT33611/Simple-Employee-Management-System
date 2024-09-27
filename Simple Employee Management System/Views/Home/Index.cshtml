@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Employee Management System";
+}
+
+<div class="container-fluid p-0">
+    <div class="bg-primary text-white py-5 mb-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Employee Management System</h1>
+            <p class="fs-4">Streamline your workforce management with our comprehensive solution.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Employee List</h5>
+                        <p class="card-text">View and manage your entire workforce in one place.</p>
+                        <a href="@Url.Action("Index", "Employee")" class="btn btn-primary mt-auto">Go to Employee List</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Add New Employee</h5>
+                        <p class="card-text">Quickly add new members to your team.</p>
+                        <a href="@Url.Action("Create", "Employee")" class="btn btn-success mt-auto">Add Employee</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Upload Employee Data</h5>
+                        <p class="card-text">Bulk import employee data using JSON format.</p>
+                        <a href="@Url.Action("Index", "Employee")" class="btn btn-info mt-auto">Upload JSON</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ 
+    </div>
+</div>
+
