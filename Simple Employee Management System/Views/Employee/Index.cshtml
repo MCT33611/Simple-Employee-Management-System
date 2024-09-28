@@ -1,13 +1,46 @@
 ﻿@model IEnumerable<Simple_Employee_Management_System.Models.Employee>
-
 @{
     ViewData["Title"] = "Employee Index";
 }
-
 <h1>Employee List</h1>
-
 <a class="btn btn-primary mb-3" asp-action="Create">Create New Employee</a>
 <a class="btn btn-primary mb-3" asp-controller="Json" asp-action="Index">Import From Json</a>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <label for="department" class="form-label">Department:</label>
+            <select name="department" id="department" class="form-select">
+                <option value="">All Departments</option>
+                @foreach (var dept in ViewBag.Departments)
+                {
+                    <option value="@dept.DepartmentId">@dept.DepartmentName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="startDate" class="form-label">Start Date:</label>
+            <input type="date" name="startDate" id="startDate" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label for="endDate" class="form-label">End Date:</label>
+            <input type="date" name="endDate" id="endDate" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label for="minSalary" class="form-label">Min Salary:</label>
+            <input type="number" name="minSalary" id="minSalary" class="form-control" />
+        </div>
+        <div class="col-md-3 mt-2">
+            <label for="maxSalary" class="form-label">Max Salary:</label>
+            <input type="number" name="maxSalary" id="maxSalary" class="form-control" />
+        </div>
+        <div class="col-md-3 mt-4">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a asp-action="Index" class="btn btn-secondary">Clear</a>
+        </div>
+    </div>
+</form>
+<div class="w-100  table-responsive">
 
 <table class="table table-bordered">
     <thead>
@@ -41,3 +74,4 @@
         }
     </tbody>
 </table>
+</div>

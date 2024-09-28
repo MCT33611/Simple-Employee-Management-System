@@ -1,6 +1,6 @@
 # Simple Employee Management System
 
-A comprehensive employee management solution built with .NET 8 MVC, designed to streamline workforce management tasks.
+A comprehensive employee management solution built with .NET 8 MVC, designed to streamline workforce management tasks with a responsive user interface.
 
 ## Table of Contents
 - [Features](#features)
@@ -8,15 +8,20 @@ A comprehensive employee management solution built with .NET 8 MVC, designed to 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
 - Employee CRUD operations
 - Department management
+- Project tracking
 - Dependent information management
 - JSON data import functionality
-
+- Responsive user interface for seamless access across devices
+- Advanced employee filtering options:
+  - Filter by department
+  - Filter by date of joining
+  - Filter by salary range
+- Responsive design for optimal viewing on desktop, tablet, and mobile devices
 
 ## Prerequisites
 
@@ -71,9 +76,12 @@ To run the application:
 
 4. Use the navigation menu to access different features:
    - Employee List: View and manage all employees
+     - Use the filtering options to narrow down the employee list by department, date of joining, or salary range
    - Department Management: Add, edit, or delete departments
    - Employee Creation: Add new employees with their details
    - JSON Import: Bulk import employee data using JSON format
+
+5. The responsive design ensures a seamless experience across desktop, tablet, and mobile devices. Try accessing the application on different devices to see how the layout adapts.
 
 ## Contributing
 
@@ -86,6 +94,3 @@ Contributions to the Simple Employee Management System are welcome. Please follo
 5. Push to the branch (`git push origin feature/AmazingFeature`)
 6. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.

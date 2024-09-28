@@ -16,13 +16,50 @@ namespace Simple_Employee_Management_System.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        /*        public async Task<IActionResult> Index()
+                {
+                    var employees = await _context.Employees
+                        .Include(e => e.Department)
+                        .ToListAsync();
+                    return View(employees);
+                }*/
+
+        public async Task<IActionResult> Index(int? department, DateTime? startDate, DateTime? endDate, decimal? minSalary, decimal? maxSalary)
         {
-            var employees = await _context.Employees
+            ViewBag.Departments = await _context.Departments.ToListAsync();
+
+            var employees = _context.Employees
                 .Include(e => e.Department)
-                .ToListAsync();
-            return View(employees);
+                .AsQueryable();
+
+            if (department.HasValue)
+            {
+                employees = employees.Where(e => e.DepartmentId == department.Value);
+            }
+
+            if (startDate.HasValue)
+            {
+                employees = employees.Where(e => e.DateOfJoining >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                employees = employees.Where(e => e.DateOfJoining <= endDate.Value);
+            }
+
+            if (minSalary.HasValue)
+            {
+                employees = employees.Where(e => e.Salary >= minSalary.Value);
+            }
+
+            if (maxSalary.HasValue)
+            {
+                employees = employees.Where(e => e.Salary <= maxSalary.Value);
+            }
+
+            return View(await employees.ToListAsync());
         }
+
 
         public IActionResult Create()
         {
